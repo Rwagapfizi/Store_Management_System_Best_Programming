@@ -1,0 +1,47 @@
+<?php
+
+$productName = $_POST['productname'];
+$brand = $_POST['brand'];
+$supplierTel = $_POST['suppliertel'];
+$supplier = $_POST['supplier'];
+$userID = $_POST['userID'];
+
+include "../connect.php";
+?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Product Registration</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <h1>STORE MANAGEMENT SYSTEM</h1>
+    <div class="container reg_container">
+        <h2>Product Registration</h2>
+
+        <?php
+        if (!$connection) {
+            echo "<p style='color: red;'>Connection failed: " . mysqli_connect_error() . "</p>";
+        } else {
+            $query = "INSERT INTO stk_products(product_Name,brand,supplier_phone,supplier,userId) VALUES('$productName', '$brand', '$supplierTel', '$supplier', '$userID')";
+            // $query = "INSERT INTO stk_products(product_Name,brand,supplier_phone,supplier) VALUES('$productName', '$brand', '$supplierTel', '$supplier')";
+            $insertQuery = mysqli_query($connection, $query);
+            if ($insertQuery) {
+                echo "<p style='color: green;' class='reg_message'>" . $productName . " successfully in the list of products.</p>";
+            } else {
+                echo "<p style='color: red;' class='reg_message>ERROR: " . mysqli_error($connection) . "</p>";
+            }
+        }
+        echo "<br><a href=\"displayproducts.php\">Display products</a>";
+        echo "<a href=\"../home.php\">Back to Home</a>";
+
+        ?>
+    </div>
+</body>
+
+</html>
